@@ -164,12 +164,14 @@ define(function(require, exports, module) {
     if (value && !_isFileChanged) {
       $fileExt.text($fileExt.text() + '*');
       //$fileTitle.editable('disable');
+      $fileTitle.prop('disable', true);
       $('#fileTags').find('button').prop('disabled', true);
       $('#addTagFileViewer').prop('disabled', true);
     }
     if (!value) {
       $fileExt.text(TSCORE.TagUtils.extractFileExtension(_openedFilePath));
       //$fileTitle.editable('enable');
+      $fileTitle.prop('enable', true);
       $('#fileTags').find('button').prop('disabled', false);
       $('#addTagFileViewer').prop('disabled', false);
     }
@@ -448,25 +450,16 @@ define(function(require, exports, module) {
   }
 
   function renameFileTitle(newValue) {
+    console.debug(newValue);
     var title = TSCORE.TagUtils.extractTitle(_openedFilePath);
-    var inputField = $('#editableTitle').val(newValue) || $('#editableTitle').val(title);
-    var label = inputField && inputField.prev();
-
-    //var initialFilePath = $('#editableTitle').attr('filepath');
-    //var containingDir = TSCORE.TagUtils.extractContainingDirectoryPath(initialFilePath);
-    //var newFilePath = containingDir + TSCORE.dirSeparator + $('#editableTitle').val();
-
-    TSCORE.IO.renameFilePromise(initialFilePath, newValue).then(function(success) {
-              TSCORE.TagUtils.changeTitle(_openedFilePath, newValue);
-            },
-            function(error) {
-              TSCORE.showAlertDialog("Renaming file " + newValue + " failed.");
-              console.error("Renaming file " + newValue + " failed " + error);
-            }
-    );
-
-    label.text(inputField.val() === title ? title : inputField.val());
-    inputField.hide();
+    //var input = newValue !== undefined ?
+    //        TSCORE.TagUtils.changeTitle(_openedFilePath, newValue) :
+    //        $('#editableTitle').val(title);
+    var input = $('#editableTitle').val(title);
+    var label = input && input.prev();
+    //TSCORE.TagUtils.changeTitle(_openedFilePath, newValue);
+    label.text(input.val() === title ? title : input.val());
+    input.hide();
     label.show();
   }
 
