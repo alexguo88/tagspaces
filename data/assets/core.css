@@ -544,3 +544,10 @@ input a.resetFilter {
 .parentDirectoryButton {
   max-width: 30px !important;
 }
+#editableTitle {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  margin: 5px;
+  border-radius: 6px;
+  min-width: 83%;
+}
